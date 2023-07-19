@@ -29,7 +29,6 @@ export default class ParkingLotRepositoryMemory
       parkingLotData.closeHour,
       occupiedSpaces
     );
-    parkingLot.occupiedSpaces = this.parkedCars.length;
     return Promise.resolve(parkingLot);
   }
 

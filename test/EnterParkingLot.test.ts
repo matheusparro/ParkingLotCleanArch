@@ -1,12 +1,21 @@
 import EnterParkingLot from "../src/core/usecase/EnterParkingLot";
 import GetParkingLots from "../src/core/usecase/GetParkingLot";
 import ParkingLotRepositoryMemory from "../src/infra/Repository/ParkingLotRepositoryMemory";
+import ParkingLotRepositorySQL from "../src/infra/Repository/ParkingLotRepositorySQL";
+
+test.skip("Should get parking lot", async () => {
+  const parkingLotRepositoryMemory = new ParkingLotRepositoryMemory();
+  const parkingLotRepositorySQL = new ParkingLotRepositorySQL();
+  const getParkingLot = new GetParkingLots(parkingLotRepositorySQL);
+  const parkingLot = await getParkingLot.execute("shopping");
+  expect(parkingLot.code).toBe("shopping");
+});
 
 test("Should enter parking lot", async () => {
   const parkingLotRepositoryMemory = new ParkingLotRepositoryMemory();
-  const enterParkingLot = new EnterParkingLot(parkingLotRepositoryMemory);
-
-  const getParkingLot = new GetParkingLots(parkingLotRepositoryMemory);
+  const parkingLotRepositorySQL = new ParkingLotRepositorySQL();
+  const enterParkingLot = new EnterParkingLot(parkingLotRepositorySQL);
+  const getParkingLot = new GetParkingLots(parkingLotRepositorySQL);
   const parkingLotBeforeEnter = await getParkingLot.execute("shopping");
   expect(parkingLotBeforeEnter.occupiedSpaces).toBe(0);
 
